@@ -27,18 +27,58 @@ function playRound(playerSelection, computerSelection) {
   if ((player === 'rock' && comp === 'scissors') ||
       (player === 'scissors' && comp === 'paper') ||
       (player === 'paper' && comp === 'rock')) {
-        result = `You win! ${playerSelection} beats ${computerSelection}!`;
+        result = 'player'
   } else if ((player === 'rock' && comp === 'rock') ||
-             (player === 'scissors' && comp === 'scissors') ||
-             (player === 'paper' && comp === 'paper')) {
-               result = `It's a tie! ${playerSelection} equals ${computerSelection}.`;
+            (player === 'scissors' && comp === 'scissors') ||
+            (player === 'paper' && comp === 'paper')) {
+              result = 'tie';
   } else {
-    result = `You lose! ${computerSelection} beats ${playerSelection}!`;
+    result = 'comp';
   }
+
+  showResult(result, playerSelection, computerSelection);
 
   return result;
 }
 
-const player = 'Rock';
-const comp = computerPlay();
-console.log(playRound(player, comp));
+function showResult(winner, player, comp) {
+  let result;
+
+  if (winner === 'player') {
+    result = `You win! ${player} beats ${comp}!`;
+  } else if (winner === 'comp') {
+    result = `You lose! ${comp} beats ${player}!`;
+  } else {
+    result = `It's a tie! ${player} equals ${comp}.`;
+  }
+
+  console.log(result);
+}
+
+function game(rounds) {
+  let playerScore = 0;
+  let compScore = 0
+  for (let i = 0; i < rounds; i++) {
+    let player = prompt('Pick: ');
+    let wonRound = playRound(player, computerPlay());
+
+    if (wonRound === 'player') {
+      playerScore++;
+    } else if (wonRound === 'comp') {
+      compScore++;
+    }
+
+    console.log(`Round ${i+1} Score - Player: ${playerScore} | Computer: ${compScore}`);
+  }
+
+  if (playerScore > compScore) {
+    console.log('Winner: Player');
+  } else if (playerScore < compScore) {
+    console.log('Winner: Computer')
+  } else {
+    console.log('It\'s a tie');
+  }
+  
+}
+
+game(5);
