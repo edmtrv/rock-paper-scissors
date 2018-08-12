@@ -4,20 +4,22 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css?family=Oswald:300,400,700" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css">
   <title>Rock Paper Scissors</title>
 </head>
 <body>
-  <div class="container">
-    <div class="buttons">
+  <div class="container clearfix">
+    <section class="buttons">
       <button class="btn">Rock</button>
       <button class="btn">Paper</button>
       <button class="btn">Scissors</button>
-    </div>
-    <div class="score">
+    </section>
+    <section class="score">
         Player: <span id="player">0</span>
         Computer: <span id="comp">0</span>
-    </div>
-    <div class="rounds"></div>
+    </section>
+    <section class="rounds"></section>
   </div>
   <script src="game.js"></script>
 </body>

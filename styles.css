@@ -1,0 +1,59 @@
+/* Basic */
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Oswald", sans-serif;
+}
+
+
+/* Layout */
+
+.clearfix:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.container {
+  padding-top: 20px;
+}
+
+section {
+  float: left;
+  width: 140px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-right: 1px solid rgba(151, 151, 151, 0.322);
+}
+
+button:not(:last-of-type) {
+  margin-bottom: 20px;
+}
+
+/* UI Elements */
+
+.btn {
+  display: block;
+  width: 100px;
+  height: 100px;
+  background-color: rgb(248, 248, 248);
+  border: 1px solid rgba(224, 224, 224, 0.671);
+  box-shadow: 0px 1px 4px rgb(167, 167, 167);
+  border-radius: 1px;
+  outline: none;
+  font-family: "Oswald", sans-serif;
+  transition: all .3s;
+}
+
+.btn:hover {
+  box-shadow: 0px 2px 6px rgb(156, 156, 156);
+}
+
+.btn:active {
+  box-shadow: 0px 1px 4px rgb(167, 167, 167);
+}
