@@ -37,22 +37,58 @@ function playRound(playerSelection, computerSelection) {
   }
 
   showResult(result, playerSelection, computerSelection);
+  checkScore();
+}
 
-  return result;
+function updateScore(winner) {
+  const score = document.querySelector(`#${winner}`);
+  score.innerText = +score.innerText + 1;
+}
+
+function checkScore() {
+  const pScore = document.querySelector('#player').textContent;
+  const cScore = document.querySelector('#comp').textContent;
+  const h2 = document.createElement('h2');
+  const container = document.querySelector('.container');
+
+  if (+pScore == 5) {
+    h2.textContent = 'You have won!';
+    h2.style.color = 'green';
+    reset();
+    container.appendChild(h2);
+  } else if (+cScore == 5) {
+    h2.textContent = 'You have lost!'
+    h2.style.color = 'red';
+    reset(); 
+    container.appendChild(h2);
+  }
+}
+
+function reset() {
+  const pScore = document.querySelector('#player');
+  const cScore = document.querySelector('#comp');
+  const rounds = document.querySelector('.rounds');
+
+  pScore.textContent = '0';
+  cScore.textContent = '0';
+  rounds.innerHTML = '';
 }
 
 function showResult(winner, player, comp) {
-  let result;
+  const p = document.createElement('p');
+  const rounds = document.querySelector('.rounds');
 
   if (winner === 'player') {
-    result = `You win! ${player} beats ${comp}!`;
+    p.innerText = `You win! ${player} beats ${comp}!`;
+    updateScore('player')
   } else if (winner === 'comp') {
-    result = `You lose! ${comp} beats ${player}!`;
+    p.innerText = `You lose! ${comp} beats ${player}!`;
+    updateScore('comp')
   } else {
-    result = `It's a tie! ${player} equals ${comp}.`;
+    p.innerText = `It's a tie! ${player} equals ${comp}.`;
   }
 
-  console.log(result);
+  rounds.appendChild(p);
 }
 
 function game(rounds) {
@@ -81,4 +117,8 @@ function game(rounds) {
   
 }
 
-game(5);
+const buttons = document.querySelectorAll('button');
+buttons.forEach(button => button.addEventListener(
+  'click', (e) => playRound(e.target.textContent, computerPlay())
+));
+
