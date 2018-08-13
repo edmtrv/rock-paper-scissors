@@ -9,6 +9,7 @@
 body {
   font-family: "Oswald", sans-serif;
   font-size: 10px;
+  color: rgb(65, 65, 65);
 }
 
 
@@ -59,6 +60,7 @@ button:not(:last-of-type) {
   font-family: "Oswald", sans-serif;
   transition: all .3s;
   font-size: 1.5em;
+  color: rgb(65, 65, 65);
 }
 
 .btn:hover {
@@ -71,7 +73,7 @@ button:not(:last-of-type) {
 
 .score {
   padding-bottom: 20px;
-  font-size: 2em;
+  font-size: 1.9em;
   height: 50%;
 }
 
@@ -87,4 +89,21 @@ button:not(:last-of-type) {
 .message {
   height: 35%;
   font-size: 2em;
+}
+
+.win {
+  color: rgb(51, 179, 68);
+}
+
+.lose {
+  color: rgb(197, 41, 41);
+}
+
+.tie {
+  color: rgb(48, 80, 224);
+}
+
+.score div {
+  font-size: 1.5em;
+  margin-top: 40px;
 }

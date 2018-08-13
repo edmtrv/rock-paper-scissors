@@ -24,20 +24,48 @@ function playRound(playerSelection, computerSelection) {
   const comp = computerSelection.toLowerCase();
   let result;
 
+  showPicks(playerSelection, computerSelection);
+
   if ((player === 'rock' && comp === 'scissors') ||
       (player === 'scissors' && comp === 'paper') ||
       (player === 'paper' && comp === 'rock')) {
-        result = 'player'
+        result = 'player';
+        updateScore('player');
   } else if ((player === 'rock' && comp === 'rock') ||
             (player === 'scissors' && comp === 'scissors') ||
             (player === 'paper' && comp === 'paper')) {
               result = 'tie';
   } else {
     result = 'comp';
+    updateScore('comp');
   }
 
-  showResult(result, playerSelection, computerSelection);
+  showRoundWL(result);
+
   checkScore();
+}
+
+function showPicks(player, comp) {
+  const pPick = document.querySelector('.player-pick'); 
+  const cPick = document.querySelector('.comp-pick');
+
+  pPick.textContent = player;
+  cPick.textContent = comp;
+}
+
+function showRoundWL(winner) {
+  clearPrevRound();
+  if (winner === 'tie') {
+    const divs = document.querySelectorAll('.score div');
+    divs.forEach(div => div.classList.add('tie'));
+    return;
+  }
+
+  const winDiv = document.querySelector(`.${winner}-pick`);
+  const loseDiv = document.querySelector(`.score div:not(.${winner}-pick)`)
+
+  winDiv.classList.add('win');
+  loseDiv.classList.add('lose');
 }
 
 function updateScore(winner) {
@@ -48,76 +76,56 @@ function updateScore(winner) {
 function checkScore() {
   const pScore = document.querySelector('#player').textContent;
   const cScore = document.querySelector('#comp').textContent;
-  const h2 = document.createElement('h2');
-  const container = document.querySelector('.container');
+  let message;
 
   if (+pScore == 5) {
-    h2.textContent = 'You have won!';
-    h2.style.color = 'green';
-    reset();
-    container.appendChild(h2);
+    message = 'You\'ve won!';
+    grade(message);
   } else if (+cScore == 5) {
-    h2.textContent = 'You have lost!'
-    h2.style.color = 'red';
-    reset(); 
-    container.appendChild(h2);
+    message = 'You\'ve lost!';
+    grade(message);
   }
 }
 
-function reset() {
+function grade(msg) {
+  const section = document.querySelector('.winner');
+
+  const div = document.createElement('div');
+  div.classList.add('message');
+  div.textContent = msg;
+
+  const btn = document.createElement('button');
+  btn.classList.add('btn', 'reset');
+  btn.textContent = 'Play Again?';
+
+  section.append(div, btn);
+
+  const reset = document.querySelector('.reset');
+  reset.addEventListener('click', resetGame);
+}
+
+function clearPrevRound() {
+  const pPick = document.querySelector('.player-pick'); 
+  const cPick = document.querySelector('.comp-pick');
+  pPick.classList.remove('tie', 'win', 'lose');
+  cPick.classList.remove('tie', 'win', 'lose');
+}
+
+function resetGame() {
   const pScore = document.querySelector('#player');
   const cScore = document.querySelector('#comp');
-  const rounds = document.querySelector('.rounds');
+  const winner = document.querySelector('.winner');
+  const pPick = document.querySelector('.player-pick'); 
+  const cPick = document.querySelector('.comp-pick');
 
+  pPick.textContent = '-';
+  cPick.textContent = '-';
   pScore.textContent = '0';
   cScore.textContent = '0';
-  rounds.innerHTML = '';
+  winner.innerHTML = '';
 }
 
-function showResult(winner, player, comp) {
-  const p = document.createElement('p');
-  const rounds = document.querySelector('.rounds');
-
-  if (winner === 'player') {
-    p.innerText = `You win! ${player} beats ${comp}!`;
-    updateScore('player')
-  } else if (winner === 'comp') {
-    p.innerText = `You lose! ${comp} beats ${player}!`;
-    updateScore('comp')
-  } else {
-    p.innerText = `It's a tie! ${player} equals ${comp}.`;
-  }
-
-  rounds.appendChild(p);
-}
-
-function game(rounds) {
-  let playerScore = 0;
-  let compScore = 0
-  for (let i = 0; i < rounds; i++) {
-    let player = prompt('Pick: ');
-    let wonRound = playRound(player, computerPlay());
-
-    if (wonRound === 'player') {
-      playerScore++;
-    } else if (wonRound === 'comp') {
-      compScore++;
-    }
-
-    console.log(`Round ${i+1} Score - Player: ${playerScore} | Computer: ${compScore}`);
-  }
-
-  if (playerScore > compScore) {
-    console.log('Winner: Player');
-  } else if (playerScore < compScore) {
-    console.log('Winner: Computer')
-  } else {
-    console.log('It\'s a tie');
-  }
-  
-}
-
-const buttons = document.querySelectorAll('button');
+const buttons = document.querySelectorAll('.buttons button');
 buttons.forEach(button => button.addEventListener(
   'click', (e) => playRound(e.target.textContent, computerPlay())
 ));
